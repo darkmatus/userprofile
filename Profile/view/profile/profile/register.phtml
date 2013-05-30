@@ -1,0 +1,19 @@
+<?php
+$title = 'Registrieren';
+$this->headTitle($title);
+?>
+
+<h1><?php echo $this->escapeHtml($title); ?></h1>
+<?php
+$form = $this->form;
+$form->prepare();?>
+
+<?php echo $this->form()->openTag($form);?>
+<?php echo $this->formRow($form->get('username'));?><br />
+<?php echo $this->formRow($form->get('password'));?><br />
+<?php echo $this->formRow($form->get('password_verify'));?><br />
+<?php echo $this->formRow($form->get('displayname'));?><br />
+<?php echo $this->formRow($form->get('email'));?><br />
+<?php echo $this->formRow($form->get('city'));?><br />
+<?php echo $this->formRow($form->get('submit'));?><br />
+<?php echo $this->form()->closeTag();?>

@@ -1,0 +1,27 @@
+<?php
+$title = 'Profil bearbeiten';
+$this->headTitle($title);
+?>
+<h1><?php echo $this->escapeHtml($title); ?></h1>
+<?php
+$form = $this->form;
+$form->prepare();?>
+
+<?php echo $this->form()->openTag($form);?>
+<?php echo $this->formRow($form->get('name'));?><br />
+<?php echo $this->formRow($form->get('lastname'));?><br />
+<?php echo $this->formRow($form->get('googleplus'));?><br />
+<?php echo $this->formRow($form->get('facebook'));?><br />
+<?php echo $this->formRow($form->get('myspace'));?><br />
+<?php echo $this->formRow($form->get('icq'));?><br />
+<?php echo $this->formRow($form->get('hobby'));?><br />
+<?php echo $this->formRow($form->get('signature'));?><br />
+<?php echo $this->formRow($form->get('blog'));?><br />
+<?php echo $this->formRow($form->get('gender'));?><br />
+<?php echo $this->formRow($form->get('birth'));?><br />
+<?php echo $this->formRow($form->get('homepage'));?><br />
+<?php echo $this->formRow($form->get('name_description'));?><br />
+<?php echo $this->formRow($form->get('submit'));?><br />
+<?php echo $this->form()->closeTag();?>
+<?php echo  $this->render('profile/partial/upload.phtml',
+    array('form' => $this->upload)); ?>

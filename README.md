@@ -4,7 +4,9 @@ Userprofile for own website project(s)
 Install:
 - clone 
 - create 'public/images/user_uploads' and make it writeable
-- insert 'scripts/sql/userprofile.sql' into your database
+- insert 'Profile/scripts/sql/userprofile.sql' into your database
+- copy 'Profile/config/db.local.php.dist' to your 'config/autoload', rename it to db.local.php 
+  and insert your database settings
 
 I hope that this is all. If i forgott some thing it will be added.
 Please believe, this zf2-module is for use with my own projects and it is still under development.

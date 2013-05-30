@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="Profile\Entity\UserData" table="user_data" repository-class="Profile\Repository\UserRepository">
+  <id name="userid" type="integer" column="userId">
+    <generator strategy="IDENTITY"/>
+  </id>
+    <field name="lastname" type="string" column="lastname" length="100" nullable="true"/>
+    <field name="name" type="string" column="name" length="100" nullable="true"/>
+    <field name="birth" type="date" column="birth" nullable="true"/>
+    <field name="gender" type="string" column="gender" length="45" nullable="true"/>
+    <field name="hobby" type="string" column="hobby" length="200" nullable="true"/>
+    <field name="signature" type="text" column="signature" nullable="true"/>
+    <field name="namedescription" type="string" column="nameDescription" length="300" nullable="true"/>
+    <field name="icq" type="integer" column="icq" nullable="true"/>
+    <field name="myspace" type="string" column="myspace" length="300" nullable="true"/>
+    <field name="facebook" type="string" column="facebook" length="300" nullable="true"/>
+    <field name="googleplus" type="string" column="googleplus" length="300" nullable="true"/>
+    <field name="homepage" type="string" column="homepage" length="300" nullable="true"/>
+    <field name="blog" type="string" column="blog" length="45" nullable="true"/>
+    <field name="picture" type="string" column="picture" length="150" nullable="true"/>
+    <one-to-one field="user" target-entity="Profile\Entity\User">
+      <join-columns>
+        <join-column name="userId" referenced-column-name="userId"/>
+      </join-columns>
+    </one-to-one>
+  </entity>
+</doctrine-mapping>

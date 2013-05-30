@@ -1,0 +1,10 @@
+
+Hallo <?php echo $this->username ?>,
+
+du bist nur noch wenige Schritte von der Vollendung deiner Registrierung
+entfernt. Wir freuen uns dich in unsere Runde begrüßen zu dürfen und wünschen
+dir viel Spaß und Glück bei dem einen oder anderem Gewinnspiel.
+
+Um deine Registrierung abzuschließen klicke oder kopiere den folgenden Link
+um deinen Account frei zu schalten:
+<?php echo $this->serverUrl($this->url('register', array('token' => $this->token))); ?>

@@ -1,0 +1,14 @@
+<?php
+$title = 'Login';
+$this->headTitle($title);
+?>
+<h1><?php echo $this->escapeHtml($title); ?></h1>
+<?php
+$form = $this->form;
+$form->prepare();?>
+
+<?php echo $this->form()->openTag($form);?>
+<?php echo $this->formRow($form->get('username'));?><br />
+<?php echo $this->formRow($form->get('password'));?><br />
+<?php echo $this->formRow($form->get('submit'));?><br />
+<?php echo $this->form()->closeTag();?>

@@ -1,0 +1,17 @@
+<?php if (!empty($this->error)) : ?>
+    <?php foreach ($this->error as $error) : ?>
+<!-- <div class="ui-widget">
+    <div class="ui-state-error ui-corner-all" style="padding: 0 .7em;">
+        <p><span class="ui-icon ui-icon-alert" style="float: left; margin-right: .3em;"></span>
+        <strong>Fehler:</strong> <?php echo $this->translate($error); ?></p>
+     </div>
+</div> -->
+<?php endforeach;?>
+<?php endif;?>
+<?php $form = $this->form;
+$form->prepare();
+
+echo $this->form()->openTag($form);
+echo $this->formRow($form->get('fileupload'));
+echo $this->formSubmit($form->get('submit'));
+echo $this->form()->closeTag();?>
