@@ -7,6 +7,8 @@ Install:
 - insert 'Profile/scripts/sql/userprofile.sql' into your database
 - copy 'Profile/config/db.local.php.dist' to your 'config/autoload', rename it to db.local.php 
   and insert your database settings
+- copy user.config.php.dist to your 'config/autolaod' and rename it to user.config.php
+- add your settings in user.config.php
 
 I hope that this is all. If i forgott some thing it will be added.
 Please believe, this zf2-module is for use with my own projects and it is still under development.
