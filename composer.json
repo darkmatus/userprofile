@@ -1,0 +1,29 @@
+{
+    "name": "darkmatus/userprofile",
+    "description": "ZF2 userprofile for own projects.",
+    "type": "library",
+    "keywords": [
+        "userprofile"
+    ],
+    "homepage": "https://github.com/darkmatus/userprofile",
+    "authors": [
+        {
+            "name": "Darkmatus",
+            "email": "mueller@s-p-it.de",
+            "homepage": "http://www.s-p-it.de"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.3",
+        "zendframework/zendframework": "2.*",
+        "darkmatus/zf2-bbcodeintegration": "dev-master"
+    },
+    "autoload": {
+        "psr-0": {
+            "userprofile": "src/"
+        },
+        "classmap": [
+            "./"
+        ]
+    }
+}
