@@ -190,6 +190,9 @@ class ProfileService extends AbstractService
                     ->setCredentialValue($password);
             $authResult = $authService->authenticate();
             if ($authResult->isValid()) {
+                $authResult->getIdentity();
+                $authResult->getIdentity()->getUserdata();
+//                 var_dump($authResult->getIdentity()->getUserdata());die();
                 $authService->getStorage()->write($authResult->getIdentity());
             }
             return $authResult;

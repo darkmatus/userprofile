@@ -3,7 +3,7 @@ return array(
     /*
      * define your salt which crypts the password
      */
-    'salt' => '362V2PwaLhAr2IkV356QTGT26VEZFo56X0UUsXo8km41qECN6PFrvSHLBQGX6TS',
+    'salt' => 'change me',
 
     /*
      * define your identity colum in your database
@@ -31,7 +31,7 @@ return array(
     ),
 
     'mail' =>array(
-        'subject' => 'Deine Registrierung auf Schwarzes-Sachsen.de',
-        'from' => 'kontakt@schwarzes-sachsen.de',
+        'subject' => 'change me', //subject for registration mail
+        'from' => 'change me', //set the mail adress from which the mail was send
     ),
 );

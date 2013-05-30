@@ -1,6 +1,16 @@
 <?php
 namespace Profile;
 
+use Profile\View\Helper\DisplayName;
+
+use Profile\View\Helper\LoginWidget;
+
+use Profile\Form\LoginForm;
+
+use Zend\Mail\Storage;
+
+use Profile\View\Helper\UserIdentity;
+
 use Doctrine\ORM\EntityManager;
 use Profile\Mapper\UserMapper;
 use Profile\View\Helper\Bbcode;
@@ -49,7 +59,15 @@ class Module implements ServiceProviderInterface
                 'emailRenderer' => function($sm) {
                 $obj = $sm->get('Zend\View\Renderer\PhpRenderer');
                 return $obj;
-                }
+                },
+                'auth_service' => function ($sm) {
+                    return new \Zend\Authentication\AuthenticationService();
+                },
+                'login_form' => function($sm) {
+                    $form = new LoginForm();
+//                     $form->setInputFilter(new Form\LoginFilter($options));
+                    return $form;
+                },
            ),
        );
     }
@@ -66,5 +84,31 @@ class Module implements ServiceProviderInterface
                 $instance->setEntityManager($serviceManager->get('doctrine.entitymanager.orm_default'));
             }
         });
+    }
+
+    public function getViewHelperConfig()
+    {
+        return array(
+            'factories' => array(
+                'DisplayName' => function ($sm) {
+                    $locator = $sm->getServiceLocator();
+                    $viewHelper = new DisplayName($locator);
+                    $viewHelper->setAuthService($locator->get('auth_service'));
+                    return $viewHelper;
+                },
+                'UserId' => function ($sm) {
+                    $locator = $sm->getServiceLocator();
+                    $viewHelper = new UserIdentity();
+                    $viewHelper->setAuthService($locator->get('auth_service'));
+                    return $viewHelper;
+                },
+                'UserLoginWidget' => function ($sm) {
+                    $locator = $sm->getServiceLocator();
+                    $viewHelper = new LoginWidget();
+                    $viewHelper->setLoginForm($locator->get('login_form'));
+                    return $viewHelper;
+                },
+            ),
+        );
     }
 }

@@ -124,12 +124,6 @@ class ProfileForm extends Form
             )
         );
 
-//         $this->add(array(
-//                 'type' => 'Zend\Form\Element\Date',
-//                 'name' => 'birth',
-//                 'options' => array(
-//                     'label' => 'Geburtstag (Datumsformat: YYYY-MM-TT)' ) ) );
-
         $this->add(array(
                 'name' => 'submit',
                 'attributes' => array(
