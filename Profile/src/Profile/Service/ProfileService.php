@@ -192,7 +192,6 @@ class ProfileService extends AbstractService
             if ($authResult->isValid()) {
                 $authResult->getIdentity();
                 $authResult->getIdentity()->getUserdata();
-//                 var_dump($authResult->getIdentity()->getUserdata());die();
                 $authService->getStorage()->write($authResult->getIdentity());
             }
             return $authResult;

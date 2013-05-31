@@ -41,5 +41,5 @@ return array(
                 'use_cookies' => true,
                 'cookie_httponly' => true,
         ),
-        'user_config' => include __DIR__ . '/user.config.php',
+        'user_config' => include 'config/autoload/user.config.php',
     );

@@ -21,7 +21,8 @@ class UserIdentity extends AbstractHelper
     public function __invoke()
     {
         if ($this->getAuthService()->hasIdentity()) {
-            return $this->getAuthService()->getIdentity();
+            $userId = $this->getAuthService()->getIdentity();
+            return $userId['userid'];
         } else {
             return false;
         }
@@ -41,7 +42,7 @@ class UserIdentity extends AbstractHelper
      * Set authService.
      *
      * @param AuthenticationService $authService
-     * @return \ZfcUser\View\Helper\ZfcUserIdentity
+     * @return \Profile\View\Helper\UserIdentity
      */
     public function setAuthService(AuthenticationService $authService)
     {

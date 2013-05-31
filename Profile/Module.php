@@ -1,16 +1,13 @@
 <?php
 namespace Profile;
 
+use Profile\Service\ProfileService as profile;
+use Profile\Controller\Plugin\UserIdent;
 use Profile\View\Helper\DisplayName;
-
 use Profile\View\Helper\LoginWidget;
-
 use Profile\Form\LoginForm;
-
 use Zend\Mail\Storage;
-
 use Profile\View\Helper\UserIdentity;
-
 use Doctrine\ORM\EntityManager;
 use Profile\Mapper\UserMapper;
 use Profile\View\Helper\Bbcode;
@@ -24,7 +21,6 @@ use Zend\Session\SessionManager;
 class Module implements ServiceProviderInterface
 
 {
-
     public function getAutoloaderConfig()
     {
         return array ('Zend\Loader\ClassMapAutoloader' => array (
@@ -65,7 +61,6 @@ class Module implements ServiceProviderInterface
                 },
                 'login_form' => function($sm) {
                     $form = new LoginForm();
-//                     $form->setInputFilter(new Form\LoginFilter($options));
                     return $form;
                 },
            ),
@@ -107,6 +102,21 @@ class Module implements ServiceProviderInterface
                     $viewHelper = new LoginWidget();
                     $viewHelper->setLoginForm($locator->get('login_form'));
                     return $viewHelper;
+                },
+            ),
+        );
+    }
+
+    public function getControllerPluginConfig()
+    {
+        return array(
+            'factories' => array(
+                'UserIdent' => function ($sm) {
+                    $locator = $sm->getServiceLocator();
+                    $plugin = new UserIdent();
+                    $plugin->setAuthService($locator->get('auth_service'));
+                    $plugin->setUserMapper($locator->get('userMapper'));
+                    return $plugin;
                 },
             ),
         );

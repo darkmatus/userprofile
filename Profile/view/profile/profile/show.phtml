@@ -32,11 +32,10 @@ Hobbys: <?php if($this->profile->getUserdata()->getHobby()) {
     echo $this->escapeHtml($this->profile->getUserdata()->getHobby());
 } else {
     }?><br />
-Homepage: <a href='<?php if($this->profile->getUserdata()->getHomepage()) {?>
-    http://<?php echo $this->profile->getUserdata()->getHomepage(); ?>' target="_blank">
+Homepage: <?php if($this->profile->getUserdata()->getHomepage()) {?>
+          <a href='http://<?php echo $this->profile->getUserdata()->getHomepage(); ?>' target="_blank">
     <?php echo $this->escapeHtml($this->profile->getUserdata()->getHomepage());?></a>
-<?php }  else {
-    }?></a><br />
+<?php }?><br />
 Bedeutung des Benutzernamens<?php if($this->profile->getUserdata()->getNamedescription()) {
     echo $this->escapeHtml($this->profile->getUserdata()->getNamedescription());
     } else {
