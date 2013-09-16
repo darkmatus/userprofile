@@ -8,7 +8,7 @@ use Zend\Mail\Message;
 use Profile\Entity\UserData;
 use Zend\Validator\Date;
 use Zend\Authentication\Adapter\AdapterInterface;
-use Application\Service\AbstractService;
+use SchwarzesSachsenCore\Service\AbstractService;
 use Zend\ServiceManager\ServiceLocatorAwareInterface;
 use Zend\Authentication\AuthenticationService;
 use Profile\Form\ProfileForm;
