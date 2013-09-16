@@ -17,7 +17,7 @@
         "php": ">=5.3.3",
         "zendframework/zendframework": "2.*",
         "darkmatus/zf2-bbcodeintegration": "dev-master",
-        "darkmatus/SchwarzesSachsenCore": "dev-master"
+        "darkmatus/schwarzessachsen-core": "dev-master"
     },
     "autoload": {
         "psr-0": {
