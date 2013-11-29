@@ -4,7 +4,6 @@ namespace Profile\Repository;
 
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Tools\Pagination\Paginator;
-// use Profile\Entity\User;
 
 class UserRepository extends EntityRepository
 {
@@ -24,6 +23,7 @@ class UserRepository extends EntityRepository
     public function deleteUser($delete)
     {
         $this->getEntityManager()->remove($delete);
+
         if ($this->getEntityManager()->flush()) {
             return true;
         }

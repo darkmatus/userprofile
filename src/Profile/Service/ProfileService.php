@@ -133,18 +133,19 @@ class ProfileService extends AbstractService
     public function addUser($entity, $form, $request)
     {
         $entity->setPassword($this->hashPassWd($request->getPost('password')));
-        $entity->setUsername($request->getPost('username'));
-        $entity->setEmail($request->getPost('email'));
-        $entity->setCity($request->getPost('city'));
-        $entity->setDisplayname($request->getPost('displayname'));
         $token = $this->registerMail($request);
         $entity->setToken($token);
+        $entity->setIsAdmin(0);
         $entity->setLogin(1);
         $user = $this->getUserMapper()->save($entity);
         $data = new UserData();
         $data->setUser($user);
-        $this->getUserMapper()->saveData($data);
-        return true;
+        $result = $this->getUserMapper()->saveData($data);
+
+        if ($result instanceof UserData) {
+            return true;
+        }
+        return false;
     }
 
     public function editProfile($form, $new)
@@ -172,13 +173,13 @@ class ProfileService extends AbstractService
 
     public function deleteProfile($id)
     {
-        if ($this->getUserMapper->find($id) != null){
-            $res = $this->getEntityManager()->getRepository('Profile\Entity\User')->find($id);
-            $this->getEntityManager()->remove($res);
+        $entity = $this->getUserMapper()->findId($id);
+
+        if ($this->getUserMapper()->findId($id) != null) {
+            return $this->getUserMapper()->deleteUser($entity);
         }
-        $res = $this->getEntityManager()->getRepository('Profile\Entity\User')->find($id);
-        $this->getEntityManager()->remove($res);
-        $this->getEntityManager()->flush();
+        return false;
+
     }
 
     public function login($username, $password)

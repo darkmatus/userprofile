@@ -124,4 +124,12 @@ class UserMapper
     {
         return $this->_em->getRepository('Profile\Entity\User')->findAll();
     }
+<<<<<<< Updated upstream
+=======
+
+    public function deleteUser($entity)
+    {
+        return $this->_em->getRepository('Profile\Entity\User')->deleteUser($entity);
+    }
+>>>>>>> Stashed changes
 }
