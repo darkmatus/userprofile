@@ -12,7 +12,8 @@ return array(
 
         'controllers' => array(
                 'invokables' => array(
-                        'profile' => 'Profile\Controller\ProfileController',
+                        'profile'      => 'Profile\Controller\ProfileController',
+                        'profileAdmin' => 'Profile\Controller\ProfileAdminController',
                 ),
         ),
         'doctrine' => array(

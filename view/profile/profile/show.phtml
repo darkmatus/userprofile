@@ -5,68 +5,120 @@
 $this->headTitle($title);
 ?>
 <h1><?php echo $this->escapeHtml($title); ?></h1>
-<?php if($this->profile->getUserdata()->getPicture()) :?>
-<div class="item">
-    <img src='./../../<?php echo $this->escapeHtml($this->profile->getUserdata()->getPicture());?>' />
+<script>
+    $('base').remove();
+    $('#tabs_div').tabs();
+</script>
+<div id="tabs">
+  <ul>
+    <li><a href="#account">Accountdaten</a></li>
+    <li><a href="#userdata">Benutzerdaten</a></li>
+    <li><a href="#userimage">Profilbild</a></li>
+  </ul>
+    <div id="account">
+<?php if ($this->profile->getUserdata()->getPicture()) :?>
+<div class="item" style=float:left>
+    <img src='<?php echo $this->basePath() . $this->escapeHtml($this->profile->getUserdata()->getPicture());?>' />
 </div>
 <?php else : ?>
-<div class="item">
-    <img src='./../../images/default.jpg' />
+<div class="item" style=float:left>
+    <img src='<?php echo $this->basePath() . '/images/account.jpg';?>'/>
 </div>
 <?php endif;?>
 Benutzername: <?php echo $this->escapeHtml($this->profile->getUsername()); ?><br />
 Vorname: <?php echo $this->escapeHtml($this->profile->getUserdata()->getName());?><br />
-Nachname: <?php if($this->profile->getUserdata()->getLastname()) {
+Nachname: <?php if ($this->profile->getUserdata()->getLastname()) {
     echo $this->escapeHtml($this->profile->getUserdata()->getLastname());
     } else {
     }?><br />
-Geschlecht: <?php if($this->profile->getUserdata()->getGender()) {
+Geschlecht: <?php if ($this->profile->getUserdata()->getGender()) {
     echo $this->escapeHtml($this->profile->getUserdata()->getGender());
     } else {
     }?><br />
-Geburtstag: <?php if($this->profile->getUserdata()->getBirth()) {
+Geburtstag: <?php if ($this->profile->getUserdata()->getBirth()) {
     echo $this->escapeHtml($this->profile->getUserdata()->getBirth()->format('d.m.Y'));
     } else {
     }?><br />
-Hobbys: <?php if($this->profile->getUserdata()->getHobby()) {
-    echo $this->escapeHtml($this->profile->getUserdata()->getHobby());
-} else {
-    }?><br />
-Homepage: <?php if($this->profile->getUserdata()->getHomepage()) {?>
-          <a href='http://<?php echo $this->profile->getUserdata()->getHomepage(); ?>' target="_blank">
-    <?php echo $this->escapeHtml($this->profile->getUserdata()->getHomepage());?></a>
-<?php }?><br />
-Bedeutung des Benutzernamens<?php if($this->profile->getUserdata()->getNamedescription()) {
-    echo $this->escapeHtml($this->profile->getUserdata()->getNamedescription());
-    } else {
-    }?><br />
-ICQ: <?php if($this->profile->getUserdata()->getIcq()) {
-    echo $this->escapeHtml($this->profile->getUserdata()->getIcq());
-    } else {
-    }?><br />
 Wohnort: <?php echo $this->escapeHtml($this->profile->getCity());?><br />
-Signatur: <?php if($this->profile->getUserdata()->getSignature()) {
-    echo $this->bbcode($this->profile->getUserdata()->getSignature());
+    </div>
+    <div id="userdata">
+        <table>
+            <tr>
+                <td>Facebook: </td>
+                <td><a href='http://www.facebook.com/<?php if ($this->profile->getUserdata()->getFacebook()) {
+            echo $this->escapeHtml($this->profile->getUserdata()->getFacebook()); } ?>'target=_blank>
+            <?php if ($this->profile->getUserdata()->getFacebook()) : ?>
+            <?php echo $this->escapeHtml($this->profile->getDisplayName());?> bei Facebook </a>
+            <?php else :?>
+            <?php endif;?><br /></td>
+            </tr>
+        <tr>
+            <td>Myspace:</td>
+            <td><a href='http://www.myspace.com/<?php if ($this->profile->getUserdata()->getMyspace()) {
+            echo $this->escapeHtml($this->profile->getUserdata()->getMyspace()); } ?>'target=_blank>
+            <?php if ($this->profile->getUserdata()->getMyspace()) : ?>
+            <?php echo $this->escapeHtml($this->profile->getDisplayName());?> bei Myspace </a>
+            <?php else :?>
+            <?php endif;?>
+            </td>
+        </tr>
+        <tr>
+            <td>Google+:</td>
+            <td><?php if ($this->profile->getUserdata()->getGoogleplus()) {
+                    echo $this->escapeHtml($this->profile->getUserdata()->getGoogleplus());
+                } else {
+            }?>
+            <?php endif; ?>
+            </td>
+        </tr>
+        <tr>
+            <td>ICQ:</td>
+            <td><?php if ($this->profile->getUserdata()->getIcq()) {
+        echo $this->escapeHtml($this->profile->getUserdata()->getIcq());
+        } else {
+        }?></td>
+        </tr>
+        <tr>
+            <td>Hobbys: </td>
+            <td><?php if ($this->profile->getUserdata()->getHobby()) {
+        echo $this->escapeHtml($this->profile->getUserdata()->getHobby());
     } else {
-    }?><br />
-Blog: <?php if($this->profile->getUserdata()->getBlog()) {
-    echo $this->escapeHtml($this->profile->getUserdata()->getBlog());
-    } else {
-    }?><br />
-Facebook: <a href='http://www.facebook.com/<?php if($this->profile->getUserdata()->getFacebook()) {
-        echo $this->escapeHtml($this->profile->getUserdata()->getFacebook()); } ?>'target=_blank>
-        <?php if($this->profile->getUserdata()->getFacebook()) : ?>
-        <?php echo $this->escapeHtml($this->profile->getDisplayName());?> bei Facebook </a><?php
-    else :
-    endif;?></a><br />
-Myspace: <a href='http://www.myspace.com/<?php if($this->profile->getUserdata()->getMyspace()) {
-        echo $this->escapeHtml($this->profile->getUserdata()->getMyspace()); } ?>'target=_blank>
-        <?php if($this->profile->getUserdata()->getMyspace()) : ?>
-        <?php echo $this->escapeHtml($this->profile->getDisplayName());?> bei Myspace </a><?php
-    else :
-    endif;?></a><br />
-Google+: <?php if($this->profile->getUserdata()->getGoogleplus()) {
-    echo $this->escapeHtml($this->profile->getUserdata()->getGoogleplus());
-} else {
-    }?><br />
-<?php endif; ?>
+        }?></td>
+        </tr>
+        <tr>
+            <td>Blog: </td>
+            <td><?php if ($this->profile->getUserdata()->getBlog()) {
+                echo $this->escapeHtml($this->profile->getUserdata()->getBlog());
+                } else {
+            }?>
+        </td>
+        </tr>
+        <tr>
+            <td>Homepage:</td>
+            <td><?php if ($this->profile->getUserdata()->getHomepage()) {?>
+                <a href='http://<?php echo $this->profile->getUserdata()->getHomepage(); ?>' target="_blank">
+                <?php echo $this->escapeHtml($this->profile->getUserdata()->getHomepage());?></a>
+                <?php }?>
+            </td>
+        </tr>
+            <tr>
+            <td>Bedeutung des Benutzernamens:</td>
+            <td><?php if ($this->profile->getUserdata()->getNamedescription()) {
+                echo $this->escapeHtml($this->profile->getUserdata()->getNamedescription());
+                } else {
+                }?>
+            </td>
+        </tr>
+            <tr>
+            <td>Signatur:</td>
+            <td><?php if ($this->profile->getUserdata()->getSignature()) {
+                    echo $this->bbcode($this->profile->getUserdata()->getSignature());
+                } else {
+            }?>
+            </td>
+        </tr>
+        </table>
+    </div>
+</div>
+
+

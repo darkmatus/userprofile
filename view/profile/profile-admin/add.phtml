@@ -1,0 +1,16 @@
+<?php $title = 'Benutzer bearbeiten';?>
+<?php $this->headTitle($title);?>
+<h1><?php echo $this->escapeHtml($title); ?></h1>
+
+<?php $form = $this->form; ?>
+<?php $form->setAttribute('action', $this->url('useradmin', array('action' => 'edit', 'id' => $this->id)));?>
+<?php $form->prepare();?>
+
+<?php echo $this->form()->openTag($form);?>
+<?php echo $this->formHidden($form->get('user_id'));?>
+<?php echo $this->formRow($form->get('username'));?>
+<?php echo $this->formRow($form->get('display_name'));?>
+<?php echo $this->formRow($form->get('email'));?>
+<?php echo $this->formRow($form->get('state'));?>
+<button type="submit" name="submit" value="submit" class="btn btn-small btn-primary">Bearbeiten</button>
+<?php echo $this->form()->closeTag();?>

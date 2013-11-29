@@ -1,6 +1,8 @@
 <?php
 namespace Profile;
 
+use Profile\View\Helper\UserAdmin;
+
 use Profile\Service\ProfileService as profile;
 use Profile\Controller\Plugin\UserIdent;
 use Profile\View\Helper\DisplayName;
@@ -43,7 +45,7 @@ class Module implements ServiceProviderInterface
            'factories' => array(
                 'Service\Profile' =>  function($sm)
                 {
-                return new Service\ProfileService($sm);
+                    return new Service\ProfileService($sm);
                 },
                 'Zend\Authentication\AuthenticationService' => function($sm) {
                     return $sm->get('doctrine.authenticationservice.orm_default');
@@ -94,6 +96,12 @@ class Module implements ServiceProviderInterface
                 'UserId' => function ($sm) {
                     $locator = $sm->getServiceLocator();
                     $viewHelper = new UserIdentity();
+                    $viewHelper->setAuthService($locator->get('auth_service'));
+                    return $viewHelper;
+                },
+                'isAdmin' => function ($sm) {
+                    $locator = $sm->getServiceLocator();
+                    $viewHelper = new UserAdmin($sm);
                     $viewHelper->setAuthService($locator->get('auth_service'));
                     return $viewHelper;
                 },

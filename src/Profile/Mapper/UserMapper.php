@@ -119,4 +119,9 @@ class UserMapper
     {
         return $this->_em->getRepository('Profile\Entity\User')->findOneBytoken($token);
     }
+
+    public function fetchAll()
+    {
+        return $this->_em->getRepository('Profile\Entity\User')->findAll();
+    }
 }

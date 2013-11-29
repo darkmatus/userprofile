@@ -10,6 +10,11 @@ use Doctrine\ORM\Mapping as ORM;
 class User
 {
     /**
+     * @var \DateTime
+     */
+    private $register;
+
+    /**
      * @var string
      */
     private $password;
@@ -53,6 +58,9 @@ class User
      * @var \Profile\Entity\UserData
      */
     private $userdata;
+
+
+    private $isAdmin;
 
     /**
      * Set password
@@ -98,6 +106,15 @@ class User
     public function getDisplayname()
     {
         return $this->displayname;
+    }
+
+    /**
+     * get Register
+     * @return \DateTime
+     */
+    public function getRegister()
+    {
+        return $this->register;
     }
 
     /**
@@ -246,6 +263,16 @@ class User
     public function getLogin()
     {
         return $this->login;
+    }
+
+    public function getIsAdmin()
+    {
+        return $this->isAdmin;
+    }
+
+    public function setIsAdmin($admin)
+    {
+        $this->isAdmin = $admin;
     }
 
     /**

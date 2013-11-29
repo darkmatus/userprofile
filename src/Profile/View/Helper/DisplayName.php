@@ -89,7 +89,7 @@ class DisplayName extends AbstractHelper
     public function getUserMapper()
     {
         if (null === $this->userMapper) {
-            $this->userMapper = $this->serviceManager ->get('userMapper');
+            $this->userMapper = $this->serviceManager->get('userMapper');
         }
         return $this->userMapper;
     }

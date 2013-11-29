@@ -5,13 +5,7 @@ $this->headTitle($title);
 <h1><?php echo $this->escapeHtml($title); ?></h1>
 <?php
 $form = $this->form;
-$form->setAttribute('action', $this->url(
-    'profile',
-    array(
-        'action' => 'login'
-        )
-));?>
-$form->prepare();?>
+$form->setAttribute('action', $this->url('login', array()));?>
 
 <?php echo $this->form()->openTag($form);?>
 <?php echo $this->formRow($form->get('username'));?><br />

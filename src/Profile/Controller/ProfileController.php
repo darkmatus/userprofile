@@ -117,10 +117,10 @@ class ProfileController extends AbstractActionController
     {
         $error = '';
         if ($this->getProfileService()->hasIdentity() === false) {
+
             $form = new LoginForm();
             $options = $this->getOptions();
             $request = $this->getRequest();
-
             if ($request->isPost()) {
                 $username = $request->getPost('username');
                 if ($this->getProfileService()->loginAllowed($username)) {
@@ -157,6 +157,7 @@ class ProfileController extends AbstractActionController
     {
         $service = $this->getProfileService();
         if ($service->hasIdentity() === false) {
+            $this->flashMessenger()->addErrorMessage('Bitte logge dich ein um dein Profil zu bearbeiten.');
             return $this->redirect()->toRoute('login');
         }
         $id = $service->getIdentity()->getUserId();
@@ -210,6 +211,7 @@ class ProfileController extends AbstractActionController
             return array('profile' => $profile,
                          'message' => $this->flashMessenger()->getMessages());
         }
+        $this->flashMessenger()->addErrorMessage('Bitte logge dich ein um dieses Profil zu sehen.');
         return $this->redirect()->toRoute('home');
     }
 

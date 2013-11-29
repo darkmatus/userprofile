@@ -1,0 +1,21 @@
+<?php $title = 'Benutzer löschen';?>
+<?php $this->headTitle($title);?>
+<h1><?php echo $this->escapeHtml($title); ?></h1>
+
+<p>Soll der Benutzer
+    '<?php echo $this->escapeHtml($this->user->username); ?>' richtiger Name
+    '<?php echo $this->escapeHtml($this->user->display_name); ?>' wirklich gelöscht werden??
+</p>
+<?php
+$url = $this->url('useradmin', array(
+    'action' => 'delete',
+    'id'     => $this->id,
+));
+?>
+<form action="<?php echo $url; ?>" method="post">
+<div>
+    <input type="hidden" name="id" value="<?php echo (int) $user->user_id; ?>" />
+    <button type="submit" name="del" value="Ja" class="btn btn-small btn-danger">Benutzer löschen</button>
+    <button type="submit" name="del" value="Nein" class="btn btn-small btn-primary">abbrechen</button>
+</div>
+</form>

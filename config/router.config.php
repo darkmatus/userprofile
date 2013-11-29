@@ -4,7 +4,7 @@ return array(
         'profile' => array(
             'type' => 'Segment',
             'options' => array(
-                'route' => '/profile/[:action/[:id]]',
+                'route' => '/profile/',//[:action/[:id]]',
                 'defaults' => array(
                     'controller' => 'profile',
                     'action'     => 'index',
@@ -34,7 +34,7 @@ return array(
         'login' => array(
             'type' => 'Segment',
             'options' => array(
-                'route' => '/login',
+                'route' => '/login/',
                 'defaults' => array(
                     'controller' => 'profile',
                     'action'     => 'login',
@@ -49,6 +49,16 @@ return array(
                     'controller' => 'profile',
                     'action'     => 'register',
                 ),
+            ),
+        ),
+        'profile_admin' => array(
+            'type' => 'Segment',
+            'options' => array(
+                'route' => '/admin/profile/[:action/[:id]]',
+                'defaults' => array(
+                    'controller' => 'profileAdmin',
+                    'action'     => 'index',
+                    ),
             ),
         ),
     ),
