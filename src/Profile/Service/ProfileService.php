@@ -23,25 +23,35 @@ use Zend\View\Renderer\RendererInterface as ViewRenderer;
 class ProfileService extends AbstractService
 {
 
+    /*************************** Class Variables ***************************/
+
     /**
      * @var Doctrine AuthAdapter
      */
-    protected $authAdapter;
+    protected $_authAdapter;
 
     /**
      * @var unknown_type
      */
-    protected $emailRenderer;
+    protected $_emailRenderer;
 
     /**
      * @var \Profile\Mapper\UserMapper
      */
-    protected $userMapper;
+    protected $_userMapper;
 
     /**
      * @var user_config array
      */
-    protected $options;
+    protected $_options;
+
+
+    /**
+     * @var Doctrine\ORM\EntityManager
+     */
+    protected $_em;
+
+    /*************************** Getter and Setter ***************************/
 
     /**
      * getUserMapper
@@ -50,10 +60,10 @@ class ProfileService extends AbstractService
      */
     public function getUserMapper()
     {
-        if (null === $this->userMapper) {
-            $this->userMapper = $this->getServiceManager()->get('userMapper');
+        if (null === $this->_userMapper) {
+            $this->_userMapper = $this->getServiceManager()->get('userMapper');
         }
-        return $this->userMapper;
+        return $this->_userMapper;
     }
 
     /**
@@ -64,22 +74,27 @@ class ProfileService extends AbstractService
      */
     public function setUserMapper(UserMapper $userMapper)
     {
-        $this->userMapper = $userMapper;
+        $this->_userMapper = $userMapper;
         return $this;
     }
 
+    /**
+     * set the options from config
+     * @param array $options
+     * @return array || null
+     */
     public function setOptions($options)
     {
-        return $this->options = $options;
+        return $this->_options = $options;
     }
 
     public function getOptions()
     {
-        if (null === $this->options) {
+        if (null === $this->_options) {
             $config = $this->getServiceManager()->get('config');
-            $this->options = $config['user_config'];
+            $this->_options = $config['user_config'];
         }
-        return $this->options;
+        return $this->_options;
     }
 
     /**
@@ -88,11 +103,11 @@ class ProfileService extends AbstractService
      */
     public function getAuthAdapter()
     {
-        if (null === $this->authAdapter) {
-            $this->authAdapter = $this->getServiceManager()
+        if (null === $this->_authAdapter) {
+            $this->_authAdapter = $this->getServiceManager()
                 ->get('Zend\Authentication\AuthenticationService');
         }
-        return $this->authAdapter;
+        return $this->_authAdapter;
     }
 
     /**
@@ -104,32 +119,45 @@ class ProfileService extends AbstractService
         return $this->getAuthAdapter()->hasIdentity();
     }
 
+    /**
+     * returns the UserEntity
+     * @return Ambigous <\Zend\Authentication\mixed, NULL>
+     */
     public function getIdentity()
     {
         return $this->getAuthAdapter()->getIdentity();
     }
 
     /**
-     * @var Doctrine\ORM\EntityManager
+     * set the EntityManager
+     * @param EntityManager $em
      */
-    protected $em;
-
     public function setEntityManager(EntityManager $em)
     {
-        $this->em = $em;
+        $this->_em = $em;
     }
 
     /**
      * gets the Doctrine Entity Manager
+     * @return \Doctrine\ORM\EntityManager
      */
     public function getEntityManager()
     {
-        if (null === $this->em) {
-            $this->em = $this->getServiceManager()->get('Doctrine\ORM\EntityManager');
+        if (null === $this->_em) {
+            $this->_em = $this->getServiceManager()->get('Doctrine\ORM\EntityManager');
         }
-        return $this->em;
+        return $this->_em;
     }
 
+    /*************************** Functions ***************************/
+
+    /**
+     * prepare all Data to add a new User and add them to the database
+     * @param Profile\Entity\User $entity
+     * @param \Profile\Form\RegisterForm $form
+     * @param httpRequest $request
+     * @return boolean
+     */
     public function addUser($entity, $form, $request)
     {
         $entity->setPassword($this->hashPassWd($request->getPost('password')));
@@ -148,22 +176,33 @@ class ProfileService extends AbstractService
         return false;
     }
 
-    public function editProfile($form, $new)
+    /**
+     * edit a given Profile
+     * @param \Profile\Form\RegisterForm $form
+     * @param Profile\Entity\User $entity
+     * @return boolean
+     */
+    public function editProfile($form, $entity)
     {
-        if ($form->isValid())
-        {
+        if ($form->isValid()) {
             $homepage = trim($form->get('homepage')->getValue(), 'http://');
-            $new->setHomepage($homepage);
-            $new->setUser($this->getUserById($this->getIdentity()->getUserId()));
-            $user = $this->getUserMapper()->save($new);
+            $entity->setHomepage($homepage);
+            $entity->setUser($this->getUserById($this->getIdentity()->getUserId()));
+            $user = $this->getUserMapper()->save($entity);
             return true;
         }
         return false;
     }
 
+    /**
+     * get a Profile from the Database with given ID
+     * or if no ID is given the user as self and returns them
+     * @param integer $id
+     * @return \Profile\Entity\User
+     */
     public function showProfile($id)
     {
-        if (!empty($id)){
+        if (!empty($id)) {
             $user = $this->getUserById($id);
         } else {
             $user = $this->getUserById($this->getIdentity()->getUserId());
@@ -171,6 +210,11 @@ class ProfileService extends AbstractService
         return $user;
     }
 
+    /**
+     * delets an Entity given by ID
+     * @param integer $id
+     * @return boolean
+     */
     public function deleteProfile($id)
     {
         $entity = $this->getUserMapper()->findId($id);
@@ -182,9 +226,15 @@ class ProfileService extends AbstractService
 
     }
 
+    /**
+     * log-in an user
+     * @param string $username
+     * @param string $password
+     * @return void|\Zend\Authentication\Result
+     */
     public function login($username, $password)
     {
-        if($this->loginAllowed($username)) {
+        if ($this->loginAllowed($username)) {
             $authService = $this->getAuthAdapter();
             $adapter = $authService->getAdapter();
             $adapter->setIdentityValue($username)
@@ -200,12 +250,20 @@ class ProfileService extends AbstractService
         return;
     }
 
+    /**
+     * log-out an user
+     */
     public function logout()
     {
         $this->getAuthAdapter()->clearIdentity();
         session_regenerate_id();
     }
 
+    /**
+     * generates the password with hash
+     * @param string $string
+     * @return string
+     */
     public function hashPassWd($string)
     {
         $options = $this->getOptions();
@@ -213,16 +271,30 @@ class ProfileService extends AbstractService
         return hash('sha256', $hashpw);
     }
 
+    /**
+     * get the user By Id
+     * @param integer $userId
+     */
     public function getUserById($userId)
     {
         return $this->getUserMapper()->findId($userId);
     }
 
+    /**
+     * gets the User_Data by given ID
+     * @param integer $userId
+     * @return \Profile\Entity\UserData
+     */
     public function getUserDataById($userId)
     {
         return $this->getUserMapper()->findUserDataById($userId);
     }
 
+    /**
+     * updates the Birthday
+     * @param string $birthday
+     * @return boolean
+     */
     public function updateBirthday($birthday)
     {
         $date = new \DateTime($birthday);
@@ -237,13 +309,20 @@ class ProfileService extends AbstractService
         return false;
     }
 
+    /**
+     * upload a ProfileImage
+     * @param \Profile\Form\UploadForm $form
+     * @param httpRequest $request
+     * @param file $file file to upload
+     * @return boolean
+     */
     public function upload($form, $request, $file)
     {
         $filter = new UploadFilter();
         $form->setInputFilter($filter->getInputFilter());
 
         $nonFile = $request->getPost()->toArray();
-        $data = array_merge( $nonFile, array('fileupload'=> $file['name']));
+        $data = array_merge( $nonFile, array('fileupload' => $file['name']));
         $form->setData($data);
 
         if ($form->isValid()) {
@@ -302,22 +381,37 @@ class ProfileService extends AbstractService
         return $token;
     }
 
+    /**
+     * returns User given by username
+     * @param string $username
+     * @return \Profile\Entity\User
+     */
     public function getUserByUsername($username)
     {
         return $this->getUserMapper()->findUserByUsername($username);
     }
 
+    /**
+     * checks if a user has the rights to log-in
+     * @param string $username
+     * @return boolean
+     */
     public function loginAllowed($username)
     {
         $user = $this->getUserByUsername($username);
-        if($user instanceof User) {
-            if($user->getLogin() === null) {
+        if ($user instanceof User) {
+            if ($user->getLogin() === null) {
                 return true;
             }
         }
         return false;
     }
 
+    /**
+     * confirms the User with token from Mail
+     * @param string $token
+     * @return boolean
+     */
     public function confirmUser($token)
     {
         $user = $this->getUserMapper()->findUserByToken($token);
@@ -334,6 +428,11 @@ class ProfileService extends AbstractService
         return false;
     }
 
+    /**
+     * sets the Email-Renderer
+     * @param ViewRenderer $emailRenderer
+     * @return \Profile\Service\ProfileService
+     */
     public function setMessageRenderer(ViewRenderer $emailRenderer)
     {
         $this->emailRenderer = $emailRenderer;

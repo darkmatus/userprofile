@@ -59,7 +59,9 @@ class User
      */
     private $userdata;
 
-
+    /**
+     * @var integer
+     */
     private $isAdmin;
 
     /**
@@ -292,10 +294,10 @@ class User
      */
     public function populate($data)
     {
-        $this->username = $data['username'];
-        $this->password = $data['password'];
-        $this->email = $data['email'];
-        $this->city = $data['city'];
+        $this->username    = $data['username'];
+        $this->password    = $data['password'];
+        $this->email       = $data['email'];
+        $this->city        = $data['city'];
         $this->displayname = $data['displayname'];
     }
 }

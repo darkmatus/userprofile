@@ -12,6 +12,7 @@
     <field name="token" type="string" column="token" length="255" nullable="true"/>
     <field name="login" type="integer" column="login" nullable="true"/>
     <field name="isAdmin" type="integer" column="isAdmin" nullable="true"/>
+    <field name="register" type="datetime" column="register" nullable="false"/>
     <one-to-one field="userdata" target-entity="Profile\Entity\UserData">
         <cascade>
             <cascade-all/>

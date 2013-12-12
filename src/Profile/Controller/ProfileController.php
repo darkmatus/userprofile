@@ -20,23 +20,40 @@ use Profile\Form\LoginForm;
 use Profile\Entity\User;
 use Doctrine\ORM\EntityManager;
 
+/**
+ *
+ * @author mi.mueller
+ * @copyright Michael Mueller mueller@s-p-it.de S-P-IT.de
+ */
 class ProfileController extends AbstractActionController
 {
 
-    protected $options;
+    /**
+     * OptionsArray
+     * @var array
+     */
+    protected $_options;
 
+    /**
+     * set the Options
+     * @param array $options
+     * @return array
+     */
     public function setOptions($options)
     {
-        return $this->options = $options;
+        return $this->_options = $options;
     }
 
+    /**
+     * returns the Options
+     */
     public function getOptions()
     {
-        if (null === $this->options) {
+        if (null === $this->_options) {
             $config = $this->getServiceLocator()->get('config');
-            $this->options = $config['user_config'];
+            $this->_options = $config['user_config'];
         }
-        return $this->options;
+        return $this->_options;
     }
 
     /**
@@ -63,6 +80,10 @@ class ProfileController extends AbstractActionController
         return $this->_profileService;
     }
 
+    /**
+     * get the EntityManager
+     * @return \Doctrine\ORM\EntityManager
+     */
     public function getEntityManager()
     {
         if (null === $this->_em) {
@@ -71,6 +92,10 @@ class ProfileController extends AbstractActionController
         return $this->_em;
     }
 
+    /**
+     * registerAction
+     * @return \Zend\Http\Response|multitype:\Profile\Form\RegisterForm |multitype:\Profile\Form\RegisterForm multitype:
+     */
     public function registerAction()
     {
         $error = '';
@@ -81,8 +106,8 @@ class ProfileController extends AbstractActionController
                 $this->flashMessenger()->addMessage('Freischaltung erfolgreich. Du kannst dich nun einloggen.');
                 return $this->redirect()->toRoute('login');
             }
-            $this->flashMessenger()->addErrorMessage('Der angegebene Token ist ungültig oder der Account wurde bereits aktiviert. Bitte registriere'
-                . ' dich oder logge dich ein.');
+            $this->flashMessenger()->addErrorMessage('Der angegebene Token ist ungültig oder der Account wurde bereits'
+                                                    . ' aktiviert. Bitte registriere dich oder logge dich ein.');
         }
         $form = new RegisterForm();
         $request = $this->getRequest();
@@ -112,7 +137,11 @@ class ProfileController extends AbstractActionController
                      'error' => $this->flashMessenger()->getErrorMessages());
     }
 
-
+    /**
+     * loginAction
+     * @return multitype:string \Profile\Form\LoginForm
+     * |multitype:\Profile\Form\LoginForm multitype: |\Zend\Http\Response
+     */
     public function loginAction()
     {
         $error = '';
@@ -153,6 +182,10 @@ class ProfileController extends AbstractActionController
         return $this->redirect()->toRoute('home');
     }
 
+    /**
+     * (non-PHPdoc)
+     * @see \Zend\Mvc\Controller\AbstractActionController::indexAction()
+     */
     public function indexAction()
     {
         $service = $this->getProfileService();
@@ -190,12 +223,16 @@ class ProfileController extends AbstractActionController
             'upload' => $upForm);
     }
 
+    /**
+     * showAction
+     * @return multitype:multitype: |multitype:multitype: \Profile\Entity\User |\Zend\Http\Response
+     */
     public function showAction()
     {
         if ($this->getProfileService()->getIdentity() != null) {
             $em = $this->getEntityManager();
-            $route_id = $this->params()->fromRoute('id');
-            if ($route_id != null) {
+            $routeId = $this->params()->fromRoute('id');
+            if ($routeId != null) {
                 $id = $this->params()->fromRoute('id');
             } else {
                 $id = $this->getProfileService()->getIdentity()->getUserId();
@@ -215,12 +252,20 @@ class ProfileController extends AbstractActionController
         return $this->redirect()->toRoute('home');
     }
 
+    /**
+     * logoutAction
+     * @return \Zend\Http\Response
+     */
     public function logoutAction()
     {
         $this->getProfileService()->logout();
         return $this->redirect()->toRoute('home');
     }
 
+    /**
+     * uploadAction
+     * @return \Zend\Http\Response|multitype:\Profile\Form\UploadForm
+     */
     public function uploadAction()
     {
         $form = new UploadForm();
@@ -228,8 +273,9 @@ class ProfileController extends AbstractActionController
 
         if ($request->isPost()) {
             $file    = $this->params()->fromFiles('fileupload');
-            if ($this->getProfileService()->upload($form, $request, $file) == true)
+            if ($this->getProfileService()->upload($form, $request, $file) == true) {
                 return $this->redirect()->toRoute('show');
+            }
         }
         return array('form' => $form);
     }

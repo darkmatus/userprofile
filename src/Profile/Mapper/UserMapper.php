@@ -1,24 +1,18 @@
 <?php
 namespace Profile\Mapper;
 /**
- * @category    Test
- * @package     Test_Model
- * @subpackage  Adapter
- * @copyright   Copyright (c) 2010 Unister GmbH
- * @author      Unister GmbH <teamleitung-dev@unister-gmbh.de>
- * @author      Michael Müller <michael.mueller@unister.de>
+ * @category    Mapper
+ * @package     profile\Mapper
+ * @copyright   Copyright (c) 2013 S-P-IT.de
+ * @author      Michael Müller <mueller@s-p-it.de>
  * @version     $Id: UserMapper.php 14 2013-04-25 13:59:29Z admin $
  */
 
 /**
- * Kurze Beschreibung der Klasse
- *
- * Lange Beschreibung der Klasse (wenn vorhanden)...
- *
- * @category    Test
- * @package     Test_Model
- * @subpackage  Adapter
- * @copyright   Copyright (c) 2013 Unister GmbH
+ * Mapper for all user interaction with database
+ * @category    Mapper
+ * @package     Profile\Mapper
+ * @copyright   Copyright (c) 2013 S-P-IT.de
  */
 use Profile\Repository\UserRepository;
 
@@ -124,12 +118,9 @@ class UserMapper
     {
         return $this->_em->getRepository('Profile\Entity\User')->findAll();
     }
-<<<<<<< Updated upstream
-=======
 
     public function deleteUser($entity)
     {
         return $this->_em->getRepository('Profile\Entity\User')->deleteUser($entity);
     }
->>>>>>> Stashed changes
 }
