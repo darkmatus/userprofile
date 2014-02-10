@@ -34,4 +34,14 @@ return array(
         'subject' => 'change me', //subject for registration mail
         'from' => 'change me', //set the mail adress from which the mail was send
     ),
+    // set the SPTP-Options, will only used if usage == true else it use sendmail
+    // for Mailtransport
+    'smtp' => array(
+        'usage' => true,
+        'servername' => '',
+        'host' => '',
+        'connection_class'  => '',
+        'username' => '',
+        'password' => ''
+    ),
 );
