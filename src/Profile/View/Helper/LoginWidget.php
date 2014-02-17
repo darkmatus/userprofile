@@ -12,12 +12,12 @@ class LoginWidget extends AbstractHelper
      * Login Form
      * @var LoginForm
      */
-    protected $loginForm;
+    protected $_loginForm;
 
     /**
      * $var string template used for view
      */
-    protected $viewTemplate;
+    protected $_viewTemplate;
     /**
      * __invoke
      *
@@ -26,26 +26,12 @@ class LoginWidget extends AbstractHelper
      */
     public function __invoke()
     {
-//         if (array_key_exists('render', $options)) {
-//             $render = $options['render'];
-//         } else {
-//             $render = true;
-//         }
-//         if (array_key_exists('redirect', $options)) {
-//             $redirect = $options['redirect'];
-//         } else {
-//             $redirect = false;
-//         }
 
         $vm = new ViewModel(array(
             'form' => $this->getLoginForm(),
         ));
         $vm->setTemplate('profile/profile/login.phtml');
-//         if ($render) {
-            return $this->getView()->render($vm);
-//         } else {
-//             return $vm;
-//         }
+        return $this->getView()->render($vm);
     }
 
     /**
@@ -54,27 +40,27 @@ class LoginWidget extends AbstractHelper
      */
     public function getLoginForm()
     {
-        return $this->loginForm;
+        return $this->_loginForm;
     }
 
     /**
      * Inject Login Form Object
      * @param LoginForm $loginForm
-     * @return ZfcUserLoginWidget
+     * @return UserLoginWidget
      */
     public function setLoginForm(LoginForm $loginForm)
     {
-        $this->loginForm = $loginForm;
+        $this->_loginForm = $loginForm;
         return $this;
     }
 
     /**
      * @param string $viewTemplate
-     * @return ZfcUserLoginWidget
+     * @return UserLoginWidget
      */
     public function setViewTemplate($viewTemplate)
     {
-        $this->viewTemplate = $viewTemplate;
+        $this->_viewTemplate = $viewTemplate;
         return $this;
     }
 
