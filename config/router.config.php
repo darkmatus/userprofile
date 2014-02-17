@@ -14,7 +14,7 @@ return array(
         'show' => array(
             'type' => 'Segment',
             'options' => array(
-                'route' => '/profile/show/',
+                'route' => '/profile/show/[:id]',
                 'defaults' => array(
                     'controller' => 'profile',
                     'action'     => 'show',

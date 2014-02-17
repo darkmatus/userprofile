@@ -70,7 +70,7 @@ class ProfileController extends AbstractActionController
 
     /**
      * Getter for the Profile Service
-     * @return Profile\Service\ProfileService
+     * @return \Profile\Service\ProfileService
      */
     private function getProfileService()
     {

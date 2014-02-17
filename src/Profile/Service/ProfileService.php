@@ -19,6 +19,8 @@ use Zend\Validator\File\Extension;
 use Zend\Validator\File\Size;
 use Profile\Filter\UploadFilter;
 use Zend\View\Renderer\RendererInterface as ViewRenderer;
+use Zend\Mail\Transport\Smtp;
+use Zend\Mail\Transport\SmtpOptions;
 
 class ProfileService extends AbstractService
 {
@@ -375,7 +377,23 @@ class ProfileService extends AbstractService
 
         $mail->setBody($this->getEmailRenderer()->render($viewModel));
 
-        $transport = new Sendmail();
+        $smtpOptions = $options['smtp'];
+        if ($smtpOptions['usage']) {
+            $smtp = new Smtp();
+            $smtpConf = new SmtpOptions(array(
+                'name'              => $smtpOptions['servername'],
+                'host'              => $smtpOptions['host'],
+                'connection_class'  => $smtpOptions['connection_class'],
+                'connection_config' => array(
+                    'username' => $smtpOptions['username'],
+                    'password' => $smtpOptions['password']
+                ),
+            ));
+            $smtp->setOptions($options);
+        } else {
+            $transport = new Sendmail();
+        }
+
         $transport->send($mail);
 
         return $token;
