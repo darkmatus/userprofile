@@ -4,7 +4,7 @@ return array(
         'profile' => array(
             'type' => 'Segment',
             'options' => array(
-                'route' => '/profile/',//[:action/[:id]]',
+                'route' => '/profile/[:action/[:id]]',
                 'defaults' => array(
                     'controller' => 'profile',
                     'action'     => 'index',

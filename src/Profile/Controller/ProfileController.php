@@ -270,7 +270,6 @@ class ProfileController extends AbstractActionController
     {
         $form = new UploadForm();
         $request = $this->getRequest();
-
         if ($request->isPost()) {
             $file    = $this->params()->fromFiles('fileupload');
             if ($this->getProfileService()->upload($form, $request, $file) == true) {

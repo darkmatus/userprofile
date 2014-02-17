@@ -21,15 +21,12 @@ use Zend\Session\Container;
 use Zend\Session\SessionManager;
 
 class Module implements ServiceProviderInterface
-
 {
     public function getAutoloaderConfig()
     {
-        return array ('Zend\Loader\ClassMapAutoloader' => array (
-            __DIR__ . '/autoload_classmap.php',
-            ),
-            'Zend\Loader\StandardAutoloader' => array (
-                'namespaces' => array (__NAMESPACE__ => __DIR__ . '/src/' . __NAMESPACE__,
+        return array ('Zend\Loader\ClassMapAutoloader' => array (__DIR__ . '/autoload_classmap.php'),
+            'Zend\Loader\StandardAutoloader' => array ('namespaces' => array (
+                __NAMESPACE__ => __DIR__ . '/src/' . __NAMESPACE__
                 ),
             ),
         );
@@ -43,7 +40,7 @@ class Module implements ServiceProviderInterface
     {
         return array(
            'factories' => array(
-                'Service\Profile' =>  function($sm)
+                'Service\Profile' => function($sm)
                 {
                     return new Service\ProfileService($sm);
                 },

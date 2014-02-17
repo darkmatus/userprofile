@@ -1,7 +1,5 @@
 <?php $form = $this->form;
-$form->setAttribute('action',
-                    $this->url('profile',
-                               array('controller'=>'profile', 'action' => 'upload')));
+$form->setAttribute('action', $this->url('profile', array('controller'=>'profile', 'action' => 'upload')));
 $form->prepare();
 
 echo $this->form()->openTag($form);

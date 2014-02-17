@@ -54,7 +54,6 @@ class UserIdent extends AbstractPlugin
         if ($this->getAuthService()->getIdentity() != null) {
             $id = $this->getAuthService()->getIdentity();
             $user = $this->getUserMapper()->findId($id['userid']);
-            $user->setPassword(null);
             return $user;
         }
         return $this->getAuthService()->getIdentity();

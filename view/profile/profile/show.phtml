@@ -13,7 +13,7 @@ $this->headTitle($title);
   <ul>
     <li><a href="#account">Accountdaten</a></li>
     <li><a href="#userdata">Benutzerdaten</a></li>
-    <li><a href="#userimage">Profilbild</a></li>
+<!--     <li><a href="#userimage">Profilbild</a></li> -->
   </ul>
     <div id="account">
 <?php if ($this->profile->getUserdata()->getPicture()) :?>
@@ -39,7 +39,7 @@ Geburtstag: <?php if ($this->profile->getUserdata()->getBirth()) {
     echo $this->escapeHtml($this->profile->getUserdata()->getBirth()->format('d.m.Y'));
     } else {
     }?><br />
-Wohnort: <?php echo $this->escapeHtml($this->profile->getCity());?><br />
+Wohnort: <?php echo $this->escapeHtml($this->profile->getCity());?><br /><br /><br />
     </div>
     <div id="userdata">
         <table>
